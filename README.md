@@ -72,13 +72,12 @@ Diagrams
 
 A beautifully unproductive flow: Input → Randomization → Excuse → Nap
 
-Build Photos (optional)
 
 A laptop, a cup of coffee, and a dangerously comfortable chair
 
-
 The final cozy UI ready to lull users into inactivity
 
+https://drive.google.com/drive/u/0/folders/15EJOWZijjv1EvAHKIYq0SPPaMx4g1t4X
 
 👩‍💻 Team Contributions
 Anjana Ajith – UI/UX design, excuse generator, nap timer logic
