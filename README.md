@@ -49,7 +49,7 @@ Installation
 bash
 Copy
 Edit
-git clone https://github.com/your-username/procrastinai.git
+git clone https://github.com/Ayisha-code/procrastinai.git
 cd procrastinai
 Run
 bash
