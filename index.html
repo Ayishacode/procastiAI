@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ProcrastinAI - The AI That Doesn't Help</title>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
-        /* --- Global Styles --- */
         body {
             font-family: 'Indie Flower', cursive;
-            background-color: #f7f3e9; /* Muted, lazy color */
+            background-color: #f7f3e9;
             color: #555;
             display: flex;
             flex-direction: column;
@@ -31,7 +29,6 @@
             to { opacity: 1; }
         }
 
-        /* --- Main Container --- */
         .container {
             width: 90%;
             max-width: 600px;
@@ -42,7 +39,6 @@
             box-shadow: 10px 10px 0px 0px #eee;
         }
 
-        /* --- Typography --- */
         h1 {
             font-family: 'Caveat', cursive;
             font-size: 3em;
@@ -56,7 +52,6 @@
             color: #777;
         }
 
-        /* --- Input & Button Group --- */
         .input-group {
             display: flex;
             justify-content: center;
@@ -100,7 +95,6 @@
             transform: translateY(0);
         }
 
-        /* --- Task List --- */
         #task-list {
             list-style: none;
             padding: 0;
@@ -115,16 +109,14 @@
             transition: opacity 0.3s;
         }
 
-        /* --- Quotes & Excuses --- */
         .excuse, .anti-quote {
             margin-top: 20px;
             font-size: 1.2em;
             font-style: italic;
             color: #a0a0a0;
-            min-height: 30px; /* Prevents layout shift */
+            min-height: 30px;
         }
 
-        /* --- Snooze Button --- */
         .snooze-button {
             background-color: #777;
             margin-top: 20px;
@@ -143,7 +135,6 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1>ProcrastinAI</h1>
         <p>The AI that does everything except help.</p>
@@ -153,9 +144,8 @@
             <button onclick="addTask()">Add Task</button>
         </div>
 
-        <ul id="task-list">
-        </ul>
-        
+        <ul id="task-list"></ul>
+
         <p class="excuse" id="excuse-display">Why not take a break?</p>
 
         <button onclick="generateExcuse()">Generate Excuse</button>
@@ -164,8 +154,7 @@
         <p class="anti-quote" id="anti-quote-display">"Every great achievement once began as a nap."</p>
 
         <button class="snooze-button" onclick="snoozeAll()">SNOOZE ALL RESPONSIBILITIES</button>
-
-        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -173,8 +162,7 @@
             const taskList = document.getElementById('task-list');
             const excuseDisplay = document.getElementById('excuse-display');
             const antiQuoteDisplay = document.getElementById('anti-quote-display');
-            
-            // --- Data for Procrastination Features ---
+
             const procrastinationTasks = [
                 "Nap",
                 "Watch cat videos",
@@ -204,64 +192,48 @@
 
             let reminderInterval;
 
-            // --- Function Definitions ---
-
-            // "Add Task" button logic
             window.addTask = function() {
-                console.log("Add Task button clicked.");
                 if (taskInput.value.trim() !== "") {
                     const randomTask = procrastinationTasks[Math.floor(Math.random() * procrastinationTasks.length)];
-                    
                     const li = document.createElement('li');
-                    li.innerHTML = ✅ ${randomTask};
+                    li.textContent = "✅ " + randomTask;
                     taskList.appendChild(li);
-                    
                     taskInput.value = "";
                 }
             };
 
-            // "Generate Excuse" button logic
             window.generateExcuse = function() {
-                console.log("Generate Excuse button clicked.");
                 const randomExcuse = excuses[Math.floor(Math.random() * excuses.length)];
                 excuseDisplay.textContent = randomExcuse;
             };
-            
-            // "Give Me Anti-Motivation" button logic
+
             window.generateAntiQuote = function() {
-                console.log("Give Me Anti-Motivation button clicked.");
                 const randomQuote = antiQuotes[Math.floor(Math.random() * antiQuotes.length)];
                 antiQuoteDisplay.textContent = randomQuote;
             };
 
-            // "Snooze All" button logic
             window.snoozeAll = function() {
-                console.log("Snooze All Responsibilities button clicked.");
                 taskList.innerHTML = '';
                 excuseDisplay.textContent = "All responsibilities have been successfully snoozed. Ahhh...";
                 antiQuoteDisplay.textContent = "";
             };
 
-            // --- Sleep Reminder Logic ---
             function startSleepReminder() {
                 let reminderCount = 0;
-                
+
                 reminderInterval = setInterval(() => {
                     reminderCount++;
-                    const goBackToSleep = confirm(It's been ${reminderCount} minute(s) of procrastination. Time to go to sleep. Or... do you want to keep going?);
+                    const goBackToSleep = confirm(`It's been ${reminderCount} minute(s) of procrastination. Time to go to sleep. Or... do you want to keep going?`);
 
-                    if (goBackToSleep) {
-                        console.log("User chose to keep procrastinating.");
-                    } else {
-                        console.log("User chose to stop procrastinating. Reminders cancelled.");
+                    if (!goBackToSleep) {
                         clearInterval(reminderInterval);
                     }
-                }, 60000); // 60000 milliseconds = 1 minute
+                }, 60000);
             }
-            
-            // Start the sleep reminder immediately
+
             startSleepReminder();
         });
     </script>
 </body>
 </html>
+
