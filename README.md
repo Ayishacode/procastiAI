@@ -80,8 +80,6 @@ A laptop, a cup of coffee, and a dangerously comfortable chair
 The final cozy UI ready to lull users into inactivity
 
 
-
-
 👩‍💻 Team Contributions
 Anjana Ajith – UI/UX design, excuse generator, nap timer logic
 
