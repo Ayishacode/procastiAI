@@ -5,7 +5,8 @@ Team Name: DSScout
 
 # Team Members
 Team Lead: Anjana Ajith – Adi Shankara Institute of Engineering and Technology
-Member 2: Ayisha Sulaiman – Adi Shankara Institute of Engineering and Technology
+
+Member: Ayisha Sulaiman – Adi Shankara Institute of Engineering and Technology
 
 # Project Description
 ProcrastinAI is an anti-productivity app that proudly wastes your time. From generating excuses to encouraging naps and offering sarcastic anti-motivation, it’s the ultimate tool for doing absolutely nothing — beautifully.
