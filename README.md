@@ -1,6 +1,6 @@
 💤 ProcrastinAI – The AI That Doesn’t Help
 Basic Details
-Team Name: CodeCouchPotatoes
+Team Name: DSScout
 
 Team Members
 Team Lead: Anjana Ajith – Adi Shankara Institute of Engineering and Technology
@@ -79,11 +79,8 @@ A laptop, a cup of coffee, and a dangerously comfortable chair
 
 The final cozy UI ready to lull users into inactivity
 
-🎬 Project Demo
-Demo Video: [Add YouTube link here]
-A 2-minute walkthrough of how ProcrastinAI helps you achieve nothing, efficiently.
 
-Live Demo: [Add link if deployed]
+
 
 👩‍💻 Team Contributions
 Anjana Ajith – UI/UX design, excuse generator, nap timer logic
