@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProcrastinAI - The AI That Doesn't Help</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+
+        /* --- Global Styles --- */
+        body {
+            font-family: 'Indie Flower', cursive;
+            background-color: #f7f3e9; /* Muted, lazy color */
+            color: #555;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            line-height: 1.5;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Main Container --- */
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            border: 2px dashed #ccc;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 10px 10px 0px 0px #eee;
+        }
+
+        /* --- Typography --- */
+        h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 3em;
+            color: #d67b7b;
+            margin-bottom: 0.5em;
+            text-shadow: 2px 2px #f2f2f2;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #777;
+        }
+
+        /* --- Input & Button Group --- */
+        .input-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.2em;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            width: 70%;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #d67b7b;
+        }
+
+        button {
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: #d67b7b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #c06565;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* --- Task List --- */
+        #task-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        #task-list li {
+            font-size: 1.5em;
+            padding: 5px 0;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        /* --- Quotes & Excuses --- */
+        .excuse, .anti-quote {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-style: italic;
+            color: #a0a0a0;
+            min-height: 30px; /* Prevents layout shift */
+        }
+
+        /* --- Snooze Button --- */
+        .snooze-button {
+            background-color: #777;
+            margin-top: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .snooze-button:hover {
+            background-color: #555;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ProcrastinAI</h1>
+        <p>The AI that does everything except help.</p>
+
+        <div class="input-group">
+            <input type="text" id="task-input" placeholder="What you should probably do...">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+
+        <ul id="task-list">
+        </ul>
+        
+        <p class="excuse" id="excuse-display">Why not take a break?</p>
+
+        <button onclick="generateExcuse()">Generate Excuse</button>
+        <button onclick="generateAntiQuote()">Give Me Anti-Motivation</button>
+
+        <p class="anti-quote" id="anti-quote-display">"Every great achievement once began as a nap."</p>
+
+        <button class="snooze-button" onclick="snoozeAll()">SNOOZE ALL RESPONSIBILITIES</button>
+
+        </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const taskInput = document.getElementById('task-input');
+            const taskList = document.getElementById('task-list');
+            const excuseDisplay = document.getElementById('excuse-display');
+            const antiQuoteDisplay = document.getElementById('anti-quote-display');
+            
+            // --- Data for Procrastination Features ---
+            const procrastinationTasks = [
+                "Nap",
+                "Watch cat videos",
+                "Scroll Instagram for 'research'",
+                "Reorganize your sock drawer",
+                "Stare blankly at the wall",
+                "Learn a fun fact about snails",
+                "Consider a new hobby, but don't start it"
+            ];
+
+            const excuses = [
+                "You don’t need to work today — Mercury is in retrograde.",
+                "My servers are currently hibernating. Try again tomorrow.",
+                "I'm feeling a little sleepy myself. Let's just rest.",
+                "The stars are not aligned for productivity.",
+                "You've been working so hard... in your dreams.",
+                "The WiFi is probably unstable. Better not risk it."
+            ];
+
+            const antiQuotes = [
+                "Why try today when tomorrow is so empty?",
+                "Every great achievement once began as a nap.",
+                "The best way to get things done is to just not do them.",
+                "Progress is overrated. Stasis is key.",
+                "You can't fail if you don't start."
+            ];
+
+            let reminderInterval;
+
+            // --- Function Definitions ---
+
+            // "Add Task" button logic
+            window.addTask = function() {
+                console.log("Add Task button clicked.");
+                if (taskInput.value.trim() !== "") {
+                    const randomTask = procrastinationTasks[Math.floor(Math.random() * procrastinationTasks.length)];
+                    
+                    const li = document.createElement('li');
+                    li.innerHTML = ✅ ${randomTask};
+                    taskList.appendChild(li);
+                    
+                    taskInput.value = "";
+                }
+            };
+
+            // "Generate Excuse" button logic
+            window.generateExcuse = function() {
+                console.log("Generate Excuse button clicked.");
+                const randomExcuse = excuses[Math.floor(Math.random() * excuses.length)];
+                excuseDisplay.textContent = randomExcuse;
+            };
+            
+            // "Give Me Anti-Motivation" button logic
+            window.generateAntiQuote = function() {
+                console.log("Give Me Anti-Motivation button clicked.");
+                const randomQuote = antiQuotes[Math.floor(Math.random() * antiQuotes.length)];
+                antiQuoteDisplay.textContent = randomQuote;
+            };
+
+            // "Snooze All" button logic
+            window.snoozeAll = function() {
+                console.log("Snooze All Responsibilities button clicked.");
+                taskList.innerHTML = '';
+                excuseDisplay.textContent = "All responsibilities have been successfully snoozed. Ahhh...";
+                antiQuoteDisplay.textContent = "";
+            };
+
+            // --- Sleep Reminder Logic ---
+            function startSleepReminder() {
+                let reminderCount = 0;
+                
+                reminderInterval = setInterval(() => {
+                    reminderCount++;
+                    const goBackToSleep = confirm(It's been ${reminderCount} minute(s) of procrastination. Time to go to sleep. Or... do you want to keep going?);
+
+                    if (goBackToSleep) {
+                        console.log("User chose to keep procrastinating.");
+                    } else {
+                        console.log("User chose to stop procrastinating. Reminders cancelled.");
+                        clearInterval(reminderInterval);
+                    }
+                }, 60000); // 60000 milliseconds = 1 minute
+            }
+            
+            // Start the sleep reminder immediately
+            startSleepReminder();
+        });
+    </script>
+</body>
+</html>
