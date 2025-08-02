@@ -1,3 +1,5 @@
+<img width="3188" height="1202" alt="image" src="https://github.com/user-attachments/assets/b9c99c10-1e41-493e-be4f-808dd9824498" />
+
 # ProcrastinAI: The AI That Doesn’t Help
 
 # Basic Details
